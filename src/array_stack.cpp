@@ -27,7 +27,7 @@ namespace assignment {
   }
 
   void ArrayStack::Push(int value) {
-    if(capacity_>=size_){
+    if(capacity_<=size_){
       Resize(capacity_+kCapacityGrowthCoefficient);
     }
     data_[size_]=value;
@@ -74,9 +74,10 @@ namespace assignment {
   bool ArrayStack::Resize(int new_capacity) {
     if(capacity_< new_capacity){
       int* newData= new int[new_capacity];
-      std::copy(data_[0],data_[size_],newData);
+      std::copy(&data_[0],&data_[size_],newData);
       delete[] data_;
       capacity_=new_capacity;
+      data_ = newData;
       return true;
     } else {
       return false;

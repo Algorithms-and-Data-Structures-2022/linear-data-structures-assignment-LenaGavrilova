@@ -28,7 +28,7 @@ namespace assignment {
   }
 
   void DynamicArray::Add(int value) {
-    if (capacity_>=size_) {
+    if (capacity_<=size_) {
       Resize(capacity_ + kCapacityGrowthCoefficient);
     }
     data_[size_] = value;
@@ -36,7 +36,7 @@ namespace assignment {
   }
 
   bool DynamicArray::Insert(int index, int value) {
-    if (index < 0, index >= size_){
+    if (index < 0 || index > size_){
       return false;
     }
     if (size_==capacity_) {
@@ -56,7 +56,7 @@ namespace assignment {
   }
 
   bool DynamicArray::Set(int index, int new_value) {
-    if (index >= size_ , index<0){
+    if (index >= size_ || index<0){
       return false;
     }
     data_[index] = new_value;
@@ -64,7 +64,7 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Remove(int index) {
-    if(index < 0 , index>= size_){
+    if(index < 0 || index>=size_){
       return std::nullopt;
     }
     int* newData= new int[capacity_];
@@ -85,31 +85,33 @@ namespace assignment {
   }
 
   std::optional<int> DynamicArray::Get(int index) const {
-    if (index<0 , index>=size_){
+    if (index<0 || index>=size_){
       return std::nullopt;
     }
     return data_[index];
   }
 
   std::optional<int> DynamicArray::IndexOf(int value) const {
-    for(int i = 0; i<size_;i++){
-      if (data_[i]==value){
+    for(int i = 0; i<size_;i++) {
+      if (data_[i] == value) {
         return i;
-      } else {
-        return std::nullopt;
       }
     }
-  }
+      return std::nullopt;
+    }
+
+
 
   bool DynamicArray::Contains(int value) const {
-    for ( int i = 0; i<size_; i++){
-      if(data_[i]==value){
+    for ( int i = 0; i<size_; i++) {
+      if (data_[i] == value) {
         return true;
-      } else{
-        return false;
       }
     }
-  }
+        return false;
+      }
+
+
 
   bool DynamicArray::IsEmpty() const {
     if (size_ == 0 ){
@@ -130,7 +132,7 @@ namespace assignment {
   bool DynamicArray::Resize(int new_capacity) {
     if( new_capacity> capacity_) {
       int* newData=new int[new_capacity];
-      std::copy(data_[0],data_[size_],newData);
+      std::copy(&data_[0],&data_[size_],newData);
       delete[] data_;
       data_= newData;
       capacity_=new_capacity;
